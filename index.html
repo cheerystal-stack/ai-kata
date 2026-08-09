@@ -225,7 +225,15 @@ footer {
   font-size:11px;
   letter-spacing:1px;
   color:#777;
+
+.note {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: #666;
 }
+  
 </style>
 </head>
 
@@ -837,6 +845,8 @@ function showDetail(date){
     </div>
 
     <div class="day">${data.work || ""}</div>
+
+    ${data.note ? `<div class="note">${data.note}</div>` : ""}
 
     <div class="time">${data.time}</div>
 
