@@ -655,6 +655,14 @@ const schedule = {
 
 };
 
+// 保存済みの予定があれば読み込む
+const savedSchedule = localStorage.getItem("ai-kata-schedule");
+
+if (savedSchedule) {
+  const savedData = JSON.parse(savedSchedule);
+  Object.assign(schedule, savedData);
+}
+
 /* =====================================================
         ★ 編集エリアここまで ★
 ===================================================== */
@@ -904,6 +912,11 @@ document.getElementById("saveEdit")
     pickup: document.getElementById("editPickup").checked,
     food: document.getElementById("editFood").checked
   };
+
+  localStorage.setItem(
+  "ai-kata-schedule",
+  JSON.stringify(schedule)
+);
 
   alert("SAVED ✓");
 
