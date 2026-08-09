@@ -927,6 +927,9 @@ document.getElementById("saveEdit")
     pickup: document.getElementById("editPickup").checked,
     food: document.getElementById("editFood").checked
   };
+  if (window.saveScheduleToCloud) {
+  window.saveScheduleToCloud(date, schedule[date]);
+}
 
   localStorage.setItem(
   "ai-kata-schedule",
@@ -951,7 +954,10 @@ renderCalendar();
   getFirestore,
   collection,
   addDoc,
-  serverTimestamp
+  serverTimestamp,
+  doc,
+  setDoc,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -972,6 +978,10 @@ renderCalendar();
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const db = getFirestore(app);
+  // 予定をFirestoreに保存する
+window.saveScheduleToCloud = async function(date, data) {
+  await setDoc(doc(db, "schedule", date), data);
+};
   // 秘密基地を開いた記録
 async function recordVisit() {
   try {
