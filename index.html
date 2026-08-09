@@ -875,6 +875,30 @@ function showDetail(date){
   showPage("detailPage");
 }
 
+document.getElementById("saveEdit")
+.addEventListener("click", () => {
+
+  const date = document.getElementById("editDate").value;
+
+  if (!date) {
+    alert("日付を選んでね");
+    return;
+  }
+
+  schedule[date] = {
+    work: document.getElementById("editWork").value,
+    status: document.getElementById("editStatus").value,
+    time: document.getElementById("editTime").value || "—",
+    note: document.getElementById("editNote").value,
+    home: document.getElementById("editHome").checked,
+    pickup: document.getElementById("editPickup").checked,
+    food: document.getElementById("editFood").checked
+  };
+
+  alert("SAVED ✓");
+
+  showPage("schedulePage");
+});
 
 renderNext();
 renderCalendar();
