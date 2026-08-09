@@ -307,7 +307,82 @@ EDIT <span class="arrow">→</span>
 
 </section>
 
+<!-- EDIT -->
+<section id="editPage" class="page">
 
+  <button class="back-button" data-page="home">← HOME</button>
+
+  <header>
+    <div class="logo" style="font-size:28px">EDIT SCHEDULE</div>
+  </header>
+
+  <div class="card">
+
+    <label class="label">DATE</label>
+    <input id="editDate" type="date">
+
+    <div style="height:18px"></div>
+
+    <label class="label">WORK</label>
+    <select id="editWork">
+      <option value="OFF">OFF</option>
+      <option value="DAY SHIFT">DAY SHIFT</option>
+      <option value="LATE SHIFT">LATE SHIFT</option>
+      <option value="HALF DAY">HALF DAY</option>
+    </select>
+
+    <div style="height:18px"></div>
+
+    <label class="label">STATUS</label>
+    <select id="editStatus">
+      <option value="available">AVAILABLE</option>
+      <option value="maybe">MAYBE</option>
+      <option value="busy">BUSY</option>
+    </select>
+
+    <div style="height:18px"></div>
+
+    <label class="label">TIME</label>
+    <input id="editTime" type="text" placeholder="NIGHT —">
+
+    <div style="height:18px"></div>
+
+    <label class="label">OPTIONS</label>
+
+    <label>
+      <input id="editHome" type="checkbox">
+      HOME
+    </label>
+
+    <br>
+
+    <label>
+      <input id="editPickup" type="checkbox">
+      PICKUP
+    </label>
+
+    <br>
+
+    <label>
+      <input id="editFood" type="checkbox">
+      FOOD
+    </label>
+
+    <div style="height:18px"></div>
+
+    <label class="label">NOTE</label>
+    <input id="editNote" type="text" placeholder="予定など">
+
+    <div style="height:22px"></div>
+
+    <button class="menu-button" id="saveEdit">
+      SAVE
+    </button>
+
+  </div>
+
+</section>
+  
 <!-- DETAIL -->
 <section id="detailPage" class="page">
 
@@ -589,6 +664,9 @@ function showPage(id) {
 document.getElementById("openSchedule")
 .addEventListener("click", () => showPage("schedulePage"));
 
+  document.getElementById("openEdit")
+.addEventListener("click", () => showPage("editPage"));
+  
 document.querySelectorAll(".back-button")
 .forEach(button => {
   button.addEventListener("click", () => {
