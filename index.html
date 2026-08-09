@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Ai-kata</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f5f5;
+      color: #111;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+                   Arial, sans-serif;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 28px 22px 40px;
+      background: #fff;
+    }
+
+    header {
+      text-align: center;
+      margin-top: 25px;
+      margin-bottom: 45px;
+    }
+
+    .logo {
+      font-size: 48px;
+      font-weight: 300;
+      letter-spacing: 3px;
+      margin: 0;
+    }
+
+    .you-me {
+      margin-top: 12px;
+      font-size: 14px;
+      letter-spacing: 5px;
+    }
+
+    .line {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 30px 0;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+    }
+
+    .today-word {
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .heart {
+      float: right;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 18px;
+      padding: 24px;
+      margin: 25px 0 20px;
+    }
+
+    .next-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+    }
+
+    .date {
+      font-size: 48px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      margin: 22px 0 4px;
+    }
+
+    .day {
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+
+    .time {
+      margin: 22px 0;
+      font-size: 15px;
+      letter-spacing: 1px;
+    }
+
+    .status {
+      display: inline-block;
+      background: #111;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 5px;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 26px;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+      text-align: center;
+    }
+
+    .option-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .option-text {
+      font-size: 11px;
+    }
+
+    .menu {
+      margin-top: 18px;
+    }
+
+    .menu-button {
+      width: 100%;
+      background: #fff;
+      color: #111;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 10px;
+      text-align: left;
+      font-size: 13px;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+
+    .arrow {
+      float: right;
+      font-size: 18px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 55px;
+    }
+
+    .footer-logo {
+      font-size: 18px;
+      letter-spacing: 2px;
+    }
+
+    .footer-message {
+      margin-top: 8px;
+      font-size: 10px;
+      color: #777;
+      letter-spacing: 1px;
+    }
+
+    .secret {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background: #111;
+      color: #fff;
+      border-radius: 14px;
+      text-align: center;
+      line-height: 1.8;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <header>
+      <h1 class="logo">Ai-kata</h1>
+      <div class="you-me">YOU ↔ ME</div>
+    </header>
+
+    <hr class="line">
+
+    <section>
+      <div class="section-label">
+        TODAY'S WORD
+        <span class="heart">♥</span>
+      </div>
+
+      <div class="today-word">
+        会える時間を、たいせつに。
+      </div>
+    </section>
+
+    <section class="card">
+
+      <div class="next-label">NEXT AVAILABLE</div>
+
+      <div class="date">8 / 12</div>
+      <div class="day">WEDNESDAY</div>
+
+      <div class="time">18:00 — LATE</div>
+
+      <div class="status">AVAILABLE</div>
+
+      <div class="options">
+
+        <div>
+          <div class="option-icon">⌂</div>
+          <div class="option-text">おうち OK</div>
+        </div>
+
+        <div>
+          <div class="option-icon">🚗</div>
+          <div class="option-text">迎え OK</div>
+        </div>
+
+        <div>
+          <div class="option-icon">♨</div>
+          <div class="option-text">ごはん OK</div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <nav class="menu">
+
+      <button class="menu-button" id="scheduleButton">
+        SCHEDULE
+        <span class="arrow">→</span>
+      </button>
+
+      <button class="menu-button" id="placesButton">
+        PLACES
+        <span class="arrow">→</span>
+      </button>
+
+      <button class="menu-button" id="memoriesButton">
+        MEMORIES
+        <span class="arrow">→</span>
+      </button>
+
+    </nav>
+
+    <div class="secret" id="secretMessage">
+      Ai-kata ♡<br>
+      our way to meet.
+    </div>
+
+    <footer>
+      <div class="footer-logo">Ai-kata</div>
+      <div class="footer-message">our way to meet.</div>
+    </footer>
+
+  </main>
+
+  <script>
+    const scheduleButton =
+      document.getElementById("scheduleButton");
+
+    const placesButton =
+      document.getElementById("placesButton");
+
+    const memoriesButton =
+      document.getElementById("memoriesButton");
+
+    const secretMessage =
+      document.getElementById("secretMessage");
+
+    scheduleButton.addEventListener("click", function () {
+      alert("SCHEDULE は次のアップデートで実装します。");
+    });
+
+    placesButton.addEventListener("click", function () {
+      alert("PLACES は準備中です。");
+    });
+
+    memoriesButton.addEventListener("click", function () {
+      secretMessage.style.display = "block";
+      secretMessage.scrollIntoView({
+        behavior: "smooth"
+      });
+    });
+  </script>
+
+</body>
+</html>
