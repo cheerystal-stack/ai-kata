@@ -943,5 +943,49 @@ renderCalendar();
 
 </script>
 
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
+  import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyA9aMm1dCjVrQXjYH3XwwYTacBBl-mc3wo",
+    authDomain: "ai-kata-258e1.firebaseapp.com",
+    projectId: "ai-kata-258e1",
+    storageBucket: "ai-kata-258e1.firebasestorage.app",
+    messagingSenderId: "573761061509",
+    appId: "1:573761061509:web:a88bc021bad60629d55fec",
+    measurementId: "G-T6NTLZC8W4"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+  // 秘密基地を開いた記録
+async function recordVisit() {
+  try {
+    await addDoc(collection(db, "visits"), {
+      visitedAt: serverTimestamp()
+    });
+    console.log("VISIT RECORDED");
+  } catch (error) {
+    console.error("VISIT ERROR:", error);
+  }
+}
+
+recordVisit();
+</script>
+
 </body>
 </html>
