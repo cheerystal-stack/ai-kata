@@ -1,302 +1,585 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#ffffff">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<title>Ai-kata</title>
 
-  <title>Ai-kata</title>
+<style>
+* { box-sizing: border-box; }
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+body {
+  margin: 0;
+  background: #f3f3f3;
+  color: #111;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+}
 
-    body {
-      margin: 0;
-      background: #f5f5f5;
-      color: #111;
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-                   Arial, sans-serif;
-    }
+.app {
+  max-width: 430px;
+  min-height: 100vh;
+  margin: auto;
+  background: white;
+  padding: 28px 22px 40px;
+}
 
-    .app {
-      width: 100%;
-      max-width: 430px;
-      min-height: 100vh;
-      margin: 0 auto;
-      padding: 28px 22px 40px;
-      background: #fff;
-    }
+header {
+  text-align: center;
+  padding: 28px 0 30px;
+}
 
-    header {
-      text-align: center;
-      margin-top: 25px;
-      margin-bottom: 45px;
-    }
+.logo {
+  font-size: 45px;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
 
-    .logo {
-      font-size: 48px;
-      font-weight: 300;
-      letter-spacing: 3px;
-      margin: 0;
-    }
+.you-me {
+  margin-top: 10px;
+  font-size: 13px;
+  letter-spacing: 5px;
+}
 
-    .you-me {
-      margin-top: 12px;
-      font-size: 14px;
-      letter-spacing: 5px;
-    }
+.line {
+  border: 0;
+  border-top: 1px solid #ddd;
+  margin: 20px 0 28px;
+}
 
-    .line {
-      border: none;
-      border-top: 1px solid #ddd;
-      margin: 30px 0;
-    }
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
 
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      margin-bottom: 12px;
-    }
+.word {
+  margin-top: 12px;
+  font-size: 15px;
+}
 
-    .today-word {
-      font-size: 15px;
-      line-height: 1.8;
-    }
+.heart { float: right; }
 
-    .heart {
-      float: right;
-    }
+.card {
+  border: 1px solid #ddd;
+  border-radius: 18px;
+  padding: 24px;
+  margin: 28px 0 20px;
+}
 
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 18px;
-      padding: 24px;
-      margin: 25px 0 20px;
-    }
+.big-date {
+  font-size: 46px;
+  font-weight: 300;
+  margin: 20px 0 4px;
+}
 
-    .next-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-    }
+.day {
+  font-size: 12px;
+  letter-spacing: 2px;
+}
 
-    .date {
-      font-size: 48px;
-      font-weight: 300;
-      letter-spacing: 2px;
-      margin: 22px 0 4px;
-    }
+.time {
+  margin: 20px 0;
+  font-size: 15px;
+}
 
-    .day {
-      font-size: 12px;
-      letter-spacing: 2px;
-    }
+.status {
+  display: inline-block;
+  padding: 9px 15px;
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  border-radius: 5px;
+}
 
-    .time {
-      margin: 22px 0;
-      font-size: 15px;
-      letter-spacing: 1px;
-    }
+.available {
+  background: #111;
+  color: white;
+}
 
-    .status {
-      display: inline-block;
-      background: #111;
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 5px;
-      font-size: 11px;
-      letter-spacing: 1.5px;
-    }
+.maybe {
+  background: #bbb;
+  color: #111;
+}
 
-    .options {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 26px;
-      padding-top: 20px;
-      border-top: 1px solid #ddd;
-      text-align: center;
-    }
+.busy {
+  border: 1px solid #111;
+  background: white;
+}
 
-    .option-icon {
-      font-size: 22px;
-      margin-bottom: 8px;
-    }
+.options {
+  border-top: 1px solid #ddd;
+  margin-top: 25px;
+  padding-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  text-align: center;
+}
 
-    .option-text {
-      font-size: 11px;
-    }
+.option-icon { font-size: 21px; }
+.option-text { font-size: 11px; margin-top: 7px; }
 
-    .menu {
-      margin-top: 18px;
-    }
+.menu-button, .back-button {
+  width: 100%;
+  padding: 17px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  margin: 6px 0;
+  text-align: left;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
 
-    .menu-button {
-      width: 100%;
-      background: #fff;
-      color: #111;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 10px;
-      text-align: left;
-      font-size: 13px;
-      letter-spacing: 1px;
-      cursor: pointer;
-    }
+.arrow { float:right; }
 
-    .arrow {
-      float: right;
-      font-size: 18px;
-    }
+.page { display:none; }
+.page.active { display:block; }
 
-    footer {
-      text-align: center;
-      margin-top: 55px;
-    }
+/* CALENDAR */
 
-    .footer-logo {
-      font-size: 18px;
-      letter-spacing: 2px;
-    }
+.calendar-title {
+  text-align:center;
+  font-size: 22px;
+  letter-spacing: 2px;
+  margin: 10px 0 25px;
+}
 
-    .footer-message {
-      margin-top: 8px;
-      font-size: 10px;
-      color: #777;
-      letter-spacing: 1px;
-    }
+.week, .calendar {
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  text-align:center;
+}
 
-    .secret {
-      display: none;
-      margin-top: 20px;
-      padding: 20px;
-      background: #111;
-      color: #fff;
-      border-radius: 14px;
-      text-align: center;
-      line-height: 1.8;
-      font-size: 13px;
-    }
-  </style>
+.week div {
+  font-size:9px;
+  letter-spacing:1px;
+  margin-bottom:12px;
+}
+
+.date-button {
+  border:0;
+  background:white;
+  height:48px;
+  position:relative;
+  font-size:14px;
+}
+
+.date-button.has-data {
+  cursor:pointer;
+}
+
+.dot {
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#111;
+  position:absolute;
+  bottom:5px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.dot.maybe-dot { background:#aaa; }
+
+.busy-dot {
+  background:white;
+  border:1px solid #111;
+}
+
+.legend {
+  border:1px solid #ddd;
+  border-radius:15px;
+  padding:16px;
+  margin-top:25px;
+}
+
+.legend-row {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:10px 0;
+  font-size:11px;
+}
+
+.legend-circle {
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#111;
+}
+
+.legend-circle.maybe-circle { background:#aaa; }
+
+.legend-circle.busy-circle {
+  background:white;
+  border:1px solid #111;
+}
+
+footer {
+  text-align:center;
+  margin-top:50px;
+  font-size:11px;
+  letter-spacing:1px;
+  color:#777;
+}
+</style>
 </head>
 
 <body>
 
-  <main class="app">
+<main class="app">
 
-    <header>
-      <h1 class="logo">Ai-kata</h1>
-      <div class="you-me">YOU ↔ ME</div>
-    </header>
+<!-- HOME -->
+<section id="home" class="page active">
 
-    <hr class="line">
+<header>
+  <div class="logo">Ai-kata</div>
+  <div class="you-me">YOU ↔ ME</div>
+</header>
 
-    <section>
-      <div class="section-label">
-        TODAY'S WORD
-        <span class="heart">♥</span>
+<hr class="line">
+
+<div class="label">
+TODAY'S WORD
+<span class="heart">♥</span>
+</div>
+
+<div class="word">会える時間を、たいせつに。</div>
+
+<div class="card" id="nextCard"></div>
+
+<button class="menu-button" id="openSchedule">
+SCHEDULE <span class="arrow">→</span>
+</button>
+
+<button class="menu-button">
+PLACES <span class="arrow">→</span>
+</button>
+
+<button class="menu-button">
+MEMORIES <span class="arrow">→</span>
+</button>
+
+<footer>Ai-kata · our way to meet.</footer>
+
+</section>
+
+
+<!-- SCHEDULE -->
+<section id="schedulePage" class="page">
+
+<button class="back-button" data-page="home">← HOME</button>
+
+<header>
+  <div class="logo" style="font-size:28px">SCHEDULE</div>
+</header>
+
+<div class="calendar-title">2026 / 08</div>
+
+<div class="week">
+<div>MON</div><div>TUE</div><div>WED</div>
+<div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div>
+</div>
+
+<div id="calendar" class="calendar"></div>
+
+<div class="legend">
+<div class="legend-row">
+<span class="legend-circle"></span> AVAILABLE
+</div>
+<div class="legend-row">
+<span class="legend-circle maybe-circle"></span> MAYBE
+</div>
+<div class="legend-row">
+<span class="legend-circle busy-circle"></span> BUSY
+</div>
+</div>
+
+<footer>Tap a date to see details.</footer>
+
+</section>
+
+
+<!-- DETAIL -->
+<section id="detailPage" class="page">
+
+<button class="back-button" data-page="schedulePage">← SCHEDULE</button>
+
+<div id="detailCard"></div>
+
+</section>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+
+      ★★★★★ ちあき編集エリア ★★★★★
+
+   基本的に予定変更はここだけ！
+
+   status:
+   "available" = 会える
+   "maybe"     = 時間による
+   "busy"      = 予定あり
+
+   true  = OK
+   false = NG
+
+===================================================== */
+
+const schedule = {
+
+"2026-08-12": {
+  status: "available",
+  time: "18:00 — LATE",
+  home: true,
+  pickup: true,
+  food: true
+},
+
+"2026-08-15": {
+  status: "maybe",
+  time: "20:00 —",
+  home: false,
+  pickup: true,
+  food: true
+},
+
+"2026-08-19": {
+  status: "available",
+  time: "17:30 — LATE",
+  home: true,
+  pickup: true,
+  food: true
+},
+
+"2026-08-23": {
+  status: "busy",
+  time: "予定あり",
+  home: false,
+  pickup: false,
+  food: false
+}
+
+};
+
+/* =====================================================
+        ★ 編集エリアここまで ★
+===================================================== */
+
+
+const pages = document.querySelectorAll(".page");
+
+function showPage(id) {
+  pages.forEach(page => page.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0,0);
+}
+
+
+document.getElementById("openSchedule")
+.addEventListener("click", () => showPage("schedulePage"));
+
+document.querySelectorAll(".back-button")
+.forEach(button => {
+  button.addEventListener("click", () => {
+    showPage(button.dataset.page);
+  });
+});
+
+
+/* NEXT AVAILABLE */
+
+function findNextAvailable() {
+
+  const dates = Object.keys(schedule)
+    .filter(date => schedule[date].status === "available")
+    .sort();
+
+  return dates[0];
+}
+
+function renderNext() {
+
+  const date = findNextAvailable();
+
+  if (!date) {
+    document.getElementById("nextCard").innerHTML =
+      "<div class='label'>NEXT AVAILABLE</div><p>Coming soon.</p>";
+    return;
+  }
+
+  const data = schedule[date];
+  const d = new Date(date + "T00:00:00");
+
+  const month = d.getMonth()+1;
+  const day = d.getDate();
+
+  const weekdays =
+    ["SUNDAY","MONDAY","TUESDAY","WEDNESDAY",
+     "THURSDAY","FRIDAY","SATURDAY"];
+
+  document.getElementById("nextCard").innerHTML = `
+    <div class="label">NEXT AVAILABLE</div>
+
+    <div class="big-date">${month} / ${day}</div>
+
+    <div class="day">${weekdays[d.getDay()]}</div>
+
+    <div class="time">${data.time}</div>
+
+    <span class="status available">AVAILABLE</span>
+
+    <div class="options">
+
+      <div>
+        <div class="option-icon">⌂</div>
+        <div class="option-text">
+        おうち ${data.home ? "OK" : "NG"}
+        </div>
       </div>
 
-      <div class="today-word">
-        会える時間を、たいせつに。
-      </div>
-    </section>
-
-    <section class="card">
-
-      <div class="next-label">NEXT AVAILABLE</div>
-
-      <div class="date">8 / 12</div>
-      <div class="day">WEDNESDAY</div>
-
-      <div class="time">18:00 — LATE</div>
-
-      <div class="status">AVAILABLE</div>
-
-      <div class="options">
-
-        <div>
-          <div class="option-icon">⌂</div>
-          <div class="option-text">おうち OK</div>
+      <div>
+        <div class="option-icon">🚗</div>
+        <div class="option-text">
+        迎え ${data.pickup ? "OK" : "NG"}
         </div>
-
-        <div>
-          <div class="option-icon">🚗</div>
-          <div class="option-text">迎え OK</div>
-        </div>
-
-        <div>
-          <div class="option-icon">♨</div>
-          <div class="option-text">ごはん OK</div>
-        </div>
-
       </div>
 
-    </section>
+      <div>
+        <div class="option-icon">🍴</div>
+        <div class="option-text">
+        ごはん ${data.food ? "OK" : "NG"}
+        </div>
+      </div>
 
-    <nav class="menu">
+    </div>
+  `;
+}
 
-      <button class="menu-button" id="scheduleButton">
-        SCHEDULE
-        <span class="arrow">→</span>
-      </button>
 
-      <button class="menu-button" id="placesButton">
-        PLACES
-        <span class="arrow">→</span>
-      </button>
+/* CALENDAR */
 
-      <button class="menu-button" id="memoriesButton">
-        MEMORIES
-        <span class="arrow">→</span>
-      </button>
+function renderCalendar() {
 
-    </nav>
+  const calendar = document.getElementById("calendar");
 
-    <div class="secret" id="secretMessage">
-      Ai-kata ♡<br>
-      our way to meet.
+  /* 2026/8/1 = Saturday
+     Monday-start calendar → 5 blanks */
+
+  for(let i=0;i<5;i++){
+    calendar.insertAdjacentHTML("beforeend","<div></div>");
+  }
+
+  for(let day=1;day<=31;day++){
+
+    const date =
+      `2026-08-${String(day).padStart(2,"0")}`;
+
+    const data = schedule[date];
+
+    const button = document.createElement("button");
+    button.className = "date-button";
+    button.textContent = day;
+
+    if(data){
+
+      button.classList.add("has-data");
+
+      const dot = document.createElement("span");
+      dot.className = "dot";
+
+      if(data.status === "maybe"){
+        dot.classList.add("maybe-dot");
+      }
+
+      if(data.status === "busy"){
+        dot.classList.add("busy-dot");
+      }
+
+      button.appendChild(dot);
+
+      button.addEventListener("click", () => {
+        showDetail(date);
+      });
+    }
+
+    calendar.appendChild(button);
+  }
+}
+
+
+/* DETAIL */
+
+function showDetail(date){
+
+  const data = schedule[date];
+
+  const d = new Date(date + "T00:00:00");
+
+  const weekdays =
+    ["SUNDAY","MONDAY","TUESDAY","WEDNESDAY",
+     "THURSDAY","FRIDAY","SATURDAY"];
+
+  const statusText = data.status.toUpperCase();
+
+  document.getElementById("detailCard").innerHTML = `
+
+  <div class="card">
+
+    <div class="big-date">
+      ${d.getMonth()+1} / ${d.getDate()}
     </div>
 
-    <footer>
-      <div class="footer-logo">Ai-kata</div>
-      <div class="footer-message">our way to meet.</div>
-    </footer>
+    <div class="day">
+      ${weekdays[d.getDay()]}
+    </div>
 
-  </main>
+    <div class="time">${data.time}</div>
 
-  <script>
-    const scheduleButton =
-      document.getElementById("scheduleButton");
+    <span class="status ${data.status}">
+      ${statusText}
+    </span>
 
-    const placesButton =
-      document.getElementById("placesButton");
+    <div class="options">
 
-    const memoriesButton =
-      document.getElementById("memoriesButton");
+      <div>
+        <div class="option-icon">⌂</div>
+        <div class="option-text">
+        おうち ${data.home ? "OK" : "NG"}
+        </div>
+      </div>
 
-    const secretMessage =
-      document.getElementById("secretMessage");
+      <div>
+        <div class="option-icon">🚗</div>
+        <div class="option-text">
+        迎え ${data.pickup ? "OK" : "NG"}
+        </div>
+      </div>
 
-    scheduleButton.addEventListener("click", function () {
-      alert("SCHEDULE は次のアップデートで実装します。");
-    });
+      <div>
+        <div class="option-icon">🍴</div>
+        <div class="option-text">
+        ごはん ${data.food ? "OK" : "NG"}
+        </div>
+      </div>
 
-    placesButton.addEventListener("click", function () {
-      alert("PLACES は準備中です。");
-    });
+    </div>
 
-    memoriesButton.addEventListener("click", function () {
-      secretMessage.style.display = "block";
-      secretMessage.scrollIntoView({
-        behavior: "smooth"
-      });
-    });
-  </script>
+  </div>
+  `;
+
+  showPage("detailPage");
+}
+
+
+renderNext();
+renderCalendar();
+
+</script>
 
 </body>
 </html>
