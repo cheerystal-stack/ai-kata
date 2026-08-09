@@ -1,0 +1,16 @@
+{
+  "name": "Ai-kata",
+  "short_name": "Ai-kata",
+  "start_url": "/ai-kata/",
+  "scope": "/ai-kata/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ]
+}
