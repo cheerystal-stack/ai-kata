@@ -643,6 +643,8 @@ function renderNext() {
 
     <div class="day">${data.work || ""}</div>
 
+    ${data.note ? `<div class="word">${data.note}</div>` : ""}
+
     <div class="time">${data.time}</div>
 
     <span class="status available">AVAILABLE</span>
