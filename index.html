@@ -597,13 +597,23 @@ document.querySelectorAll(".back-button")
 
 function findNextAvailable() {
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const dates = Object.keys(schedule)
-    .filter(date => schedule[date].status === "available")
+    .filter(date => {
+      const data = schedule[date];
+      const scheduleDate = new Date(date + "T00:00:00");
+
+      return (
+        data.status === "available" &&
+        scheduleDate >= today
+      );
+    })
     .sort();
 
   return dates[0];
 }
-
 function renderNext() {
 
   const date = findNextAvailable();
