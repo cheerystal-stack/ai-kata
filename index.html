@@ -261,12 +261,16 @@ footer {
 
 <hr class="line">
 
-<div class="label">
-TODAY'S WORD
-<span class="heart">♥</span>
+<div class="word">ちあきへの入り口。</div>
+
+<div class="label" style="margin-top:24px;">
+  NEW DROP
+  <span class="heart">♥</span>
 </div>
 
-<div class="word">ちあきへの入り口。</div>
+<div id="latestDrop" class="word">
+  ...
+</div>
 
 <div class="card" id="nextCard"></div>
 
@@ -1026,7 +1030,10 @@ window.renderCalendar = renderCalendar;
   serverTimestamp,
   doc,
   setDoc,
-  getDocs
+  getDocs,
+  query,
+  orderBy,
+  limit
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -1067,7 +1074,25 @@ window.saveDropToCloud = async function(text) {
     createdAt: serverTimestamp()
   });
 };
-  
+window.loadLatestDrop = async function() {
+  const q = query(
+    collection(db, "drops"),
+    orderBy("createdAt", "desc"),
+    limit(1)
+  );
+
+  const snapshot = await getDocs(q);
+
+  const latestDrop = document.getElementById("latestDrop");
+
+  if (snapshot.empty) {
+    latestDrop.textContent = "まだDROPはありません。";
+    return;
+  }
+
+  const data = snapshot.docs[0].data();
+  latestDrop.textContent = data.text;
+};
   // 秘密基地を開いた記録
 async function recordVisit() {
   try {
@@ -1082,6 +1107,7 @@ async function recordVisit() {
 
 recordVisit();
 window.loadScheduleFromCloud();
+window.loadLatestDrop();
   
 </script>
 
