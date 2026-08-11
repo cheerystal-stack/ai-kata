@@ -273,6 +273,7 @@ footer {
   ...
 </div>
 
+<div class="card" id="todayCard"></div>
 <div class="card" id="nextCard"></div>
 
 <button class="menu-button" id="openSchedule">
@@ -829,33 +830,57 @@ function renderNext() {
 
     <span class="status available">AVAILABLE</span>
 
-    <div class="options">
-
-      <div>
-        <div class="option-icon">⌂</div>
-        <div class="option-text">
-        おうち ${data.home ? "OK" : "NG"}
-        </div>
-      </div>
-
-      <div>
-        <div class="option-icon">🚗</div>
-        <div class="option-text">
-        迎え ${data.pickup ? "OK" : "NG"}
-        </div>
-      </div>
-
-      <div>
-        <div class="option-icon">🍴</div>
-        <div class="option-text">
-        ごはん ${data.food ? "OK" : "NG"}
-        </div>
-      </div>
-
-    </div>
   `;
 }
+function renderToday() {
+  const now = new Date();
 
+  const year = now.getFullYear();
+  const monthNum = now.getMonth() + 1;
+  const dayNum = now.getDate();
+
+  const date =
+    `${year}-${String(monthNum).padStart(2, "0")}-${String(dayNum).padStart(2, "0")}`;
+
+  const data = schedule[date];
+
+  const todayCard = document.getElementById("todayCard");
+
+  const weekdays = [
+    "SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY",
+    "THURSDAY", "FRIDAY", "SATURDAY"
+  ];
+
+  if (!data) {
+    todayCard.innerHTML = `
+      <div class="label">TODAY</div>
+      <div class="big-date">${monthNum} / ${dayNum}</div>
+      <div class="day">${weekdays[now.getDay()]}</div>
+      <div class="word">予定なし</div>
+    `;
+    return;
+  }
+
+  const status = data.status || "busy";
+
+  todayCard.innerHTML = `
+    <div class="label">TODAY</div>
+
+    <div class="big-date">${monthNum} / ${dayNum}</div>
+
+    <div class="day">${weekdays[now.getDay()]}</div>
+
+    <div class="day">${data.work || ""}</div>
+
+    ${data.note ? `<div class="word">${data.note}</div>` : ""}
+
+    <div class="time">${data.time || ""}</div>
+
+    <span class="status ${status}">
+      ${status.toUpperCase()}
+    </span>
+  `;
+}
 
 /* CALENDAR */
 
@@ -1003,6 +1028,7 @@ document.getElementById("saveEdit")
   "ai-kata-schedule",
   JSON.stringify(schedule)
 );
+  renderToday();
   renderNext();
 renderCalendar();
 
@@ -1011,13 +1037,14 @@ renderCalendar();
   showPage("schedulePage");
 });
 
+renderToday();
 renderNext();
 renderCalendar();
 
 window.schedule = schedule;
+window.renderToday = renderToday;
 window.renderNext = renderNext;
 window.renderCalendar = renderCalendar;
-
 </script>
 
 <script type="module">
@@ -1066,6 +1093,7 @@ window.saveScheduleToCloud = async function(date, data) {
     window.schedule[docSnap.id] = docSnap.data();
   });
 
+  window.renderToday();
   window.renderNext();
   window.renderCalendar();
 };
