@@ -282,6 +282,10 @@ PLACES <span class="arrow">→</span>
 MEMORIES <span class="arrow">→</span>
 </button>
 
+  <button class="menu-button" id="openDrop">
+  DROP <span class="arrow">→</span>
+</button>
+
   <button class="menu-button" id="openEdit">
 EDIT <span class="arrow">→</span>
 </button>
@@ -295,7 +299,45 @@ EDIT <span class="arrow">→</span>
 
 </section>
 
+<!-- DROP -->
+<section id="dropPage" class="page">
 
+  <button class="back-button" data-page="home">← HOME</button>
+
+  <header>
+    <div class="logo" style="font-size:28px">DROP</div>
+  </header>
+
+  <div class="card">
+    <div style="font-size:11px; letter-spacing:2px; margin-bottom:18px;">
+      FROM CHIAKI
+    </div>
+
+    <div id="dropList">
+      <div style="color:#999; font-size:14px;">
+        まだ何も落ちてません。
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <div style="font-size:11px; letter-spacing:2px; margin-bottom:12px;">
+      NEW DROP
+    </div>
+
+    <textarea
+      id="dropInput"
+      placeholder="ここにひとこと。"
+      style="width:100%; box-sizing:border-box; min-height:100px; padding:14px; border:1px solid #ddd; border-radius:12px; font:inherit; resize:none;"
+    ></textarea>
+
+    <button id="saveDrop" class="menu-button" style="margin-top:12px;">
+      DROP IT →
+    </button>
+  </div>
+
+</section>
+  
 <!-- SCHEDULE -->
 <section id="schedulePage" class="page">
 
@@ -695,6 +737,26 @@ function showPage(id) {
 document.getElementById("openSchedule")
 .addEventListener("click", () => showPage("schedulePage"));
 
+  document.getElementById("openDrop")
+  .addEventListener("click", () => showPage("dropPage"));
+
+  document.getElementById("saveDrop")
+  .addEventListener("click", async () => {
+    const input = document.getElementById("dropInput");
+    const text = input.value.trim();
+
+    if (!text) {
+      alert("ひとこと入れてね");
+      return;
+    }
+
+    if (window.saveDropToCloud) {
+      await window.saveDropToCloud(text);
+      input.value = "";
+      alert("DROPしました ✓");
+    }
+  });
+  
   document.getElementById("openEdit")
 .addEventListener("click", () => showPage("editPage"));
   
@@ -999,6 +1061,13 @@ window.saveScheduleToCloud = async function(date, data) {
   window.renderNext();
   window.renderCalendar();
 };
+window.saveDropToCloud = async function(text) {
+  await addDoc(collection(db, "drops"), {
+    text: text,
+    createdAt: serverTimestamp()
+  });
+};
+  
   // 秘密基地を開いた記録
 async function recordVisit() {
   try {
