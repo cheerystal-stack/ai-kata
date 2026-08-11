@@ -946,6 +946,10 @@ renderCalendar();
 renderNext();
 renderCalendar();
 
+window.schedule = schedule;
+window.renderNext = renderNext;
+window.renderCalendar = renderCalendar;
+
 </script>
 
 <script type="module">
@@ -984,6 +988,16 @@ renderCalendar();
 window.saveScheduleToCloud = async function(date, data) {
   await setDoc(doc(db, "schedule", date), data);
 };
+  window.loadScheduleFromCloud = async function() {
+  const snapshot = await getDocs(collection(db, "schedule"));
+
+  snapshot.forEach((docSnap) => {
+    window.schedule[docSnap.id] = docSnap.data();
+  });
+
+  window.renderNext();
+  window.renderCalendar();
+};
   // 秘密基地を開いた記録
 async function recordVisit() {
   try {
@@ -997,6 +1011,8 @@ async function recordVisit() {
 }
 
 recordVisit();
+window.loadScheduleFromCloud();
+  
 </script>
 
 </body>
