@@ -244,7 +244,14 @@ footer {
   color: #999;
   line-height: 2;
 }
-  
+  .compact-card {
+  padding: 20px;
+  margin-top: 14px;
+}
+
+.compact-card .big-date {
+  font-size: 42px;
+}
 </style>
 </head>
 
@@ -273,8 +280,8 @@ footer {
   ...
 </div>
 
-<div class="card" id="todayCard"></div>
-<div class="card" id="nextCard"></div>
+<div class="card compact-card" id="todayCard"></div>
+<div class="card compact-card" id="nextCard"></div>
 
 <button class="menu-button" id="openSchedule">
 SCHEDULE <span class="arrow">→</span>
@@ -788,7 +795,7 @@ function findNextAvailable() {
 
       return (
         data.status === "available" &&
-        scheduleDate >= today
+        scheduleDate > today
       );
     })
     .sort();
@@ -827,8 +834,6 @@ function renderNext() {
     ${data.note ? `<div class="word">${data.note}</div>` : ""}
 
     <div class="time">${data.time}</div>
-
-    <span class="status available">AVAILABLE</span>
 
   `;
 }
