@@ -330,6 +330,13 @@ footer {
   font-size: 18px;
   letter-spacing: 0.12em;
 }
+  .calendar-month {
+  margin-bottom: 38px;
+}
+
+.calendar-month:last-child {
+  margin-bottom: 0;
+}
   
 </style>
 </head>
@@ -445,14 +452,7 @@ EDIT <span class="arrow">→</span>
   <div class="logo" style="font-size:28px">SCHEDULE</div>
 </header>
 
-<div class="calendar-title">2026 / 08</div>
-
-<div class="week">
-<div>MON</div><div>TUE</div><div>WED</div>
-<div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div>
-</div>
-
-<div id="calendar" class="calendar"></div>
+<div id="calendarMonths"></div>ren
 
 <div class="legend">
 <div class="legend-row">
@@ -976,53 +976,96 @@ function renderToday() {
 
 function renderCalendar() {
 
-  const calendar = document.getElementById("calendar");
-  calendar.innerHTML = "";
+  const container = document.getElementById("calendarMonths");
+  container.innerHTML = "";
 
-  /* 2026/8/1 = Saturday
-     Monday-start calendar → 5 blanks */
+  const now = new Date();
 
-  for(let i=0;i<5;i++){
-    calendar.insertAdjacentHTML("beforeend","<div></div>");
-  }
+  for (let offset = 0; offset < 2; offset++) {
 
-  for(let day=1;day<=31;day++){
+    const year = now.getFullYear();
+    const monthIndex = now.getMonth() + offset;
 
-    const date =
-      `2026-08-${String(day).padStart(2,"0")}`;
+    const monthDate = new Date(year, monthIndex, 1);
 
-    const data = schedule[date];
+    const displayYear = monthDate.getFullYear();
+    const displayMonth = monthDate.getMonth();
 
-    const button = document.createElement("button");
-    button.className = "date-button";
-    button.textContent = day;
+    const daysInMonth =
+      new Date(displayYear, displayMonth + 1, 0).getDate();
 
-    if(data){
+    const firstDay =
+      new Date(displayYear, displayMonth, 1).getDay();
 
-      button.classList.add("has-data");
+    // 月曜始まり用
+    const blanks = (firstDay + 6) % 7;
 
-      const dot = document.createElement("span");
-      dot.className = "dot";
+    const monthBlock = document.createElement("div");
+    monthBlock.className = "calendar-month";
 
-      if(data.status === "maybe"){
-        dot.classList.add("maybe-dot");
-      }
+    monthBlock.innerHTML = `
+      <div class="calendar-title">
+        ${displayYear} / ${String(displayMonth + 1).padStart(2, "0")}
+      </div>
 
-      if(data.status === "busy"){
-        dot.classList.add("busy-dot");
-      }
+      <div class="week">
+        <div>MON</div>
+        <div>TUE</div>
+        <div>WED</div>
+        <div>THU</div>
+        <div>FRI</div>
+        <div>SAT</div>
+        <div>SUN</div>
+      </div>
 
-      button.appendChild(dot);
+      <div class="calendar"></div>
+    `;
 
-      button.addEventListener("click", () => {
-        showDetail(date);
-      });
+    container.appendChild(monthBlock);
+
+    const calendar = monthBlock.querySelector(".calendar");
+
+    for (let i = 0; i < blanks; i++) {
+      calendar.insertAdjacentHTML("beforeend", "<div></div>");
     }
 
-    calendar.appendChild(button);
+    for (let day = 1; day <= daysInMonth; day++) {
+
+      const date =
+        `${displayYear}-${String(displayMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+      const data = schedule[date];
+
+      const button = document.createElement("button");
+      button.className = "date-button";
+      button.textContent = day;
+
+      if (data) {
+
+        button.classList.add("has-data");
+
+        const dot = document.createElement("span");
+        dot.className = "dot";
+
+        if (data.status === "maybe") {
+          dot.classList.add("maybe-dot");
+        }
+
+        if (data.status === "busy") {
+          dot.classList.add("busy-dot");
+        }
+
+        button.appendChild(dot);
+
+        button.addEventListener("click", () => {
+          showDetail(date);
+        });
+      }
+
+      calendar.appendChild(button);
+    }
   }
 }
-
 
 /* DETAIL */
 
