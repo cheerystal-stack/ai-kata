@@ -268,7 +268,20 @@ footer {
   height: auto !important;
   display: inline-block;
 }
+.logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 
+.title-swan {
+  width: 48px !important;
+  max-width: 48px !important;
+  height: auto !important;
+  flex-shrink: 0;
+}
+  
 </style>
 </head>
 
@@ -280,7 +293,10 @@ footer {
 <section id="home" class="page active">
 
 <header>
+  <div class="logo-wrap">
   <div class="logo">Ai-kata</div>
+  <img class="title-swan" src="assets/swan.png?v=2" alt="">
+</div>
   <div class="you-me">NAOYA ↔ CHIAKI</div>
 </header>
 
@@ -296,9 +312,7 @@ footer {
 <div id="latestDrop" class="word">
   ...
 </div>
-  <div class="swan-home">
-  <img src="assets/swan.png?v=2" alt="" width="65" style="width:65px; max-width:65px; height:auto;">
-</div>
+  
 
 <div class="card compact-card" id="todayCard"></div>
 <div class="card compact-card" id="nextCard"></div>
