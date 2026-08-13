@@ -473,7 +473,7 @@ EDIT <span class="arrow">→</span>
   <div class="logo" style="font-size:28px">SCHEDULE</div>
 </header>
 
-<div id="calendarMonths"></div>ren
+<div id="calendarMonths"></div>
 
 <div class="legend">
 <div class="legend-row">
@@ -1235,7 +1235,8 @@ window.renderCalendar = renderCalendar;
   window.loadDropHistory = async function() {
   const q = query(
     collection(db, "drops"),
-    orderBy("createdAt", "desc")
+    orderBy("createdAt", "desc"),
+    limit(10)
   );
 
   const snapshot = await getDocs(q);
