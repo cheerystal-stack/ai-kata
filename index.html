@@ -337,6 +337,27 @@ footer {
 .calendar-month:last-child {
   margin-bottom: 0;
 }
+  .drop-history-item {
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.drop-history-item:last-child {
+  border-bottom: 0;
+}
+
+.drop-history-date {
+  font-size: 10px;
+  color: #999;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.drop-history-text {
+  font-family: "Yomogi", cursive;
+  font-size: 17px;
+  line-height: 1.8;
+}
   
 </style>
 </head>
@@ -1211,6 +1232,50 @@ window.renderCalendar = renderCalendar;
     measurementId: "G-T6NTLZC8W4"
   };
 
+  window.loadDropHistory = async function() {
+  const q = query(
+    collection(db, "drops"),
+    orderBy("createdAt", "desc")
+  );
+
+  const snapshot = await getDocs(q);
+  const dropList = document.getElementById("dropList");
+
+  dropList.innerHTML = "";
+
+  if (snapshot.empty) {
+    dropList.innerHTML = `
+      <div style="color:#999; font-size:14px;">
+        まだ何も落ちてません。
+      </div>
+    `;
+    return;
+  }
+
+  snapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+
+    const item = document.createElement("div");
+    item.className = "drop-history-item";
+
+    let dateText = "";
+
+    if (data.createdAt && data.createdAt.toDate) {
+      const d = data.createdAt.toDate();
+
+      dateText =
+        `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, "0")}/${String(d.getDate()).padStart(2, "0")} ` +
+        `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+    }
+
+    item.innerHTML = `
+      <div class="drop-history-date">${dateText}</div>
+      <div class="drop-history-text">${data.text}</div>
+    `;
+
+    dropList.appendChild(item);
+  });
+};
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
@@ -1270,6 +1335,7 @@ async function recordVisit() {
 recordVisit();
 window.loadScheduleFromCloud();
 window.loadLatestDrop();
+window.loadDropHistory();
   
 </script>
 
