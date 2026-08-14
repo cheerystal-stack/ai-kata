@@ -1323,6 +1323,13 @@ window.loadLatestDrop = async function() {
 };
   // 秘密基地を開いた記録
 async function recordVisit() {
+
+  // ちあき端末は記録しない
+  if (localStorage.getItem("ai-kata-owner") === "true") {
+    console.log("CHIAKI DEVICE - VISIT SKIPPED");
+    return;
+  }
+
   try {
     await addDoc(collection(db, "visits"), {
       visitedAt: serverTimestamp()
@@ -1333,6 +1340,21 @@ async function recordVisit() {
   }
 }
 
+  const urlParams = new URLSearchParams(window.location.search);
+
+if (urlParams.get("owner") === "chiaki") {
+  localStorage.setItem("ai-kata-owner", "true");
+
+  // URLから ?owner=chiaki を消す
+  history.replaceState(
+    {},
+    "",
+    window.location.pathname
+  );
+
+  alert("ちあき端末に設定しました ✓");
+}
+  
 recordVisit();
 window.loadScheduleFromCloud();
 window.loadLatestDrop();
