@@ -886,6 +886,12 @@ document.getElementById("openSchedule")
   
   document.getElementById("openEdit")
 .addEventListener("click", () => showPage("editPage"));
+
+  document.getElementById("setOwnerDevice")
+.addEventListener("click", () => {
+  localStorage.setItem("ai-kata-owner", "true");
+  alert("ちあき端末に設定しました ✓");
+});
   
 document.querySelectorAll(".back-button")
 .forEach(button => {
